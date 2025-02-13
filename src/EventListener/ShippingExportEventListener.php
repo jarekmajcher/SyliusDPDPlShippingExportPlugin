@@ -88,7 +88,7 @@ final class ShippingExportEventListener
 
             $result = $dpd->sendPackage($this->webClient->getParcels(), $this->webClient->getReceiver(), 'SENDER', $this->webClient->getServices());
 
-            $speedLabel = $dpd->generateSpeedLabelsByPackageIds([$result->packageId], $this->webClient->getPickupAddress());    /** @phpstan-ignore-line */
+            $speedLabel = $dpd->generateSpeedLabelsByPackageIds([$result->packageId], $this->webClient->getPickupAddress(), 'DOMESTIC', 'PDF', 'LBL_PRINTER', 'BIC3');    /** @phpstan-ignore-line */
         } catch (\Exception $exception) {
             $this->flashBag->add('error', sprintf(
                 'DPD Web Service for #%s order: %s',
