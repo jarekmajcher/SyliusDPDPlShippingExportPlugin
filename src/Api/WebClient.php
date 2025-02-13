@@ -55,10 +55,16 @@ final class WebClient implements WebClientInterface
         $shippingAddress = $this->getOrder()->getShippingAddress();
         Assert::notNull($shippingAddress);
 
+        $address = $shippingAddress->getStreet();
+
+        if (method_exists($shippingAddress, 'getBuildingNumber') && $shippingAddress->getBuildingNumber()) {
+            $address .= ' ' . $shippingAddress->getBuildingNumber();
+        }
+
         return [
             'company' => $shippingAddress->getCompany(),
             'name' => $shippingAddress->getFullName(),
-            'address' => $shippingAddress->getStreet(),
+            'address' => $address,
             'city' => $shippingAddress->getCity(),
             'postalCode' => $this->getPostCode(),
             'countryCode' => 'PL',
